@@ -1,6 +1,7 @@
 variable "region" {
   description = "The AWS region to deploy to."
   type        = string
+  default     = "eu-west-1"
 }
 
 variable "package_type" {
@@ -36,6 +37,7 @@ variable "timeout" {
 variable "function_name" {
   description = "The name of the Lambda Function."
   type        = string
+  default = "default_function_name"
 }
 
 variable "function_handler" {
@@ -47,6 +49,7 @@ variable "function_handler" {
 variable "powertools_service_name" {
   description = "The name of the service."
   type        = string
+  default     = "default_service_name"
 }
 
 variable "log_level" {
