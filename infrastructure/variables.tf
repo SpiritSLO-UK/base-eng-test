@@ -4,6 +4,12 @@ variable "region" {
   default     = "eu-west-1"
 }
 
+variable "environment" {
+  description = "The environment for the infrastructure"
+  type        = string
+  default     = "dev"
+}
+
 variable "package_type" {
   description = "The package type (Zip or Image) to use for this function."
   type        = string
