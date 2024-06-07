@@ -67,5 +67,5 @@ variable "log_level" {
 variable "filepath" {
   description = "The path to the function's deployment package within the local filesystem."
   type        = string
-  default     = "deployment_package.zip"
+  default     = "deployment_package.zip" #Need to look into this aftrer AWS infra is sorted
 }
