@@ -53,7 +53,8 @@ jobs:
 
       - name: Set IMAGE_TAG
         id: image-tag
-        run: echo "IMAGE_TAG=Lambda-App-v1-${GITHUB_WORKFLOW_SHA:0:8}:latest" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=Lambda-App-v1-${GITHUB_WORKFLOW_SHA:0:8}" >> $GITHUB_ENV
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
         shell: bash
@@ -62,6 +63,7 @@ jobs:
           ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
           docker_build_dir: "src"
           path_to_dockerfile: "src/Dockerfile"
+          IMAGE_TAG: latest
         run: |
           docker build "${{ env.docker_build_dir }}" -f "${{ env.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
