@@ -55,7 +55,7 @@ variable "function_handler" {
 variable "powertools_service_name" {
   description = "The name of the service."
   type        = string
-  default     = "Powertool"
+  default     = "powertool"
 }
 
 variable "log_level" {
