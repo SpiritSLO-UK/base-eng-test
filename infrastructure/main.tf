@@ -4,7 +4,6 @@ resource "aws_lambda_function" "event_handler" {
   handler       = var.function_handler
   package_type  = var.package_type
   image_uri     = "${var.ecr_repository_url}:latest"
-  filename      = var.filepath
   runtime       = var.runtime
   publish       = var.publish
   architectures = var.architectures
