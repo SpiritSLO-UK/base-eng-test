@@ -27,29 +27,77 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+# From here onward we will add the steps to build the Docker image and update the Lambda function
+
+name: Docker image build and publish
+on:
+  push:
+    branches:
+      - main 
+    inputs:
+      path_to_dockerfile:
+        description: Path to the dockerfile (default = 'Dockerfile')
+        default: "src/main.py"
+        type: string
+      docker_build_dir:
+        description: Docker build directory (default = '.')
+        default: "src"
+        type: string
+      image_tag:
+        description: Tag to apply to images.
+        type: string
+        default: snapshot-artifact
+      aws_region:
+        description: Target AWS Region
+        default: "eu-west-1"
+        type: string
+
+# concurrency required to avoid terraform lock contention during ECR provisioning
+concurrency: ci-${{ github.repository }}-docker-pipeline
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    outputs:
+      image_tag: ${{ steps.build-publish.outputs.image_tag }}
+      full_image: ${{ steps.build-publish.outputs.full_image }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Defined inside Terraform Cloud
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Defined inside Terraform Cloud
-          aws-region: eu-west-1      
+          aws-region: ${{ inputs.aws_region }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      
-      - name: Build, tag, and push the image to Amazon ECR
-        id: build-image
-        run: |
-            # Build a docker container and push it to ECR 
-            echo "Registry: ${{ vars.ECR_REGISTRY }}"
-            aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin ${{ vars.ECR_REGISTRY }}
-            docker build -t ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest .
-            echo "Pushing image to ECR..."
-            docker push ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest
-            echo "name=image::${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest" >> $GITHUB_OUTPUT
+        with:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Defined inside Terraform Cloud
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Defined inside Terraform Cloud
+          mask-password: "true" # see: https://github.com/aws-actions/amazon-ecr-login#docker-credentials
 
-      - name: Update AWS Lambda function
-        id: update-lambda
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-publish
+        shell: bash
+        env:
+          ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ ECR_REPO_NAME }}
+          IMAGE_TAG: ${{ inputs.image_tag }}
         run: |
-          aws lambda update-function-code --function-name ${{ vars.LAMBDA_FUNCTION_NAME }} --image-uri ${{ vars.ECR_REGISTRY }}/${{ vars.ECR_REPOSITORY }}:latest
+          docker build "${{ inputs.docker_build_dir }}" -f "${{ inputs.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
+          echo "image_tag=$IMAGE_TAG" 
+          echo "full_image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
