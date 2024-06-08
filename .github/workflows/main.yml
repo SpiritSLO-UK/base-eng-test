@@ -63,7 +63,7 @@ jobs:
           ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
           ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
           DOCKER_BUILD_DIR: "src"
-          DOCKERFILE_PATH: "src/Dockerfile"
+          DOCKERFILE_PATH: "Dockerfile"
         run: |
           docker build "$DOCKER_BUILD_DIR" -f "$DOCKERFILE_PATH" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
