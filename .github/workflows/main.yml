@@ -54,8 +54,8 @@ jobs:
       - name: Set IMAGE_TAG
         id: image-tag
         run: |
-          echo "IMAGE_TAG=Lambda-App-v1-${GITHUB_SHA:0:8}" >> $GITHUB_ENV
-          echo "LATEST_TAG=latest" >> $GITHUB_ENV
+#          echo "IMAGE_TAG=Lambda-App-v1-${GITHUB_SHA:0:8}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=latest" >> $GITHUB_ENV
         id: build-publish
         shell: bash
         env:
