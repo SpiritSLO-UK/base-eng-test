@@ -9,11 +9,10 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
-
 variable "package_type" {
   description = "The package type (Zip or Image) to use for this function."
   type        = string
-  default     = "Zip"
+  default     = "Image"
 }
 
 variable "runtime" {
