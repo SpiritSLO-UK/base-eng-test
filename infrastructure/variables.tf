@@ -55,7 +55,7 @@ variable "function_handler" {
 variable "powertools_service_name" {
   description = "The name of the service."
   type        = string
-  default     = "default_service_name"
+  default     = "Powertool"
 }
 
 variable "log_level" {
@@ -68,4 +68,10 @@ variable "filepath" {
   description = "The path to the function's deployment package within the local filesystem."
   type        = string
   default     = "deployment_package.zip" #Need to look into this aftrer AWS infra is sorted
+}
+
+variable "ecr_image_tag_mutability" {
+  description = "Determines whether image tags can be overwritten"
+  type        = string
+  default     = "IMMUTABLE"  // or "MUTABLE"
 }
