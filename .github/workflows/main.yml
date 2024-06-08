@@ -54,7 +54,7 @@ jobs:
 
       - name: Set IMAGE_TAG
         id: image-tag
-        run: echo "IMAGE_TAG=$(date +%Y%m%d%H%M%S)-${GITHUB_WORKFLOW_SHA}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=$(date +%Y%m%d%H%M%S)-${GITHUB_WORKFLOW_SHA 0:8}" >> $GITHUB_ENV
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
         shell: bash
