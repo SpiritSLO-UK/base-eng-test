@@ -72,7 +72,7 @@ variable "filepath" {
 variable "ecr_image_tag_mutability" {
   description = "Determines whether image tags can be overwritten"
   type        = string
-  default     = "IMMUTABLE"  // or "MUTABLE"
+  default     = "MUTABLE"  // or "IMMUTABLE"
 }
 
 variable "ecr_repository_url" {
