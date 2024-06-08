@@ -3,6 +3,7 @@ resource "aws_lambda_function" "event_handler" {
   role          = aws_iam_role.event_handler_execution_role.arn
   handler       = var.function_handler
   package_type  = var.package_type
+  image_uri     = "${var.ecr_repository_url}:latest"
   filename      = var.filepath
   runtime       = var.runtime
   publish       = var.publish
