@@ -9,8 +9,8 @@ jobs:
   deploy:
     env:
       TF_IN_AUTOMATION: true
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Defined inside Terraform Cloud
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Defined inside Terraform Cloud
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,8 +20,9 @@ jobs:
         with:
           terraform_version: 1.5.3
           terraform_wrapper: True
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }} # Defined inside Terraform Cloud
       - name: Terraform Init
         run: terraform init
       - name: Terraform Validate
         run: terraform validate -no-color
+          
