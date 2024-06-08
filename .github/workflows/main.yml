@@ -11,7 +11,6 @@ jobs:
       TF_IN_AUTOMATION: true
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }} # Defined inside Terraform Cloud
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} # Defined inside Terraform Cloud
-      aws-region: eu-west-1
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,6 +29,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+        aws-region: eu-west-1
       
       - name: Build, tag, and push the image to Amazon ECR
         id: build-image
