@@ -16,4 +16,4 @@ EXPOSE 80
 # Set the CMD to your handler
 CMD ["main.lambda_handler"]
 
-#Test the Dockerfile
+#Test the Dockerfile v1
