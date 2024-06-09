@@ -3,7 +3,6 @@ resource "aws_lambda_function" "event_handler" {
   role          = aws_iam_role.event_handler_execution_role.arn
   package_type  = var.package_type
   image_uri     = "${var.ecr_repository_url}:latest"
-#  runtime       = var.runtime                  # This is not needed because I am using a container image
   publish       = var.publish
   architectures = var.architectures
 

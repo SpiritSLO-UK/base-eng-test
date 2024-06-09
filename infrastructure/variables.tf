@@ -15,12 +15,6 @@ variable "package_type" {
   default     = "Image"
 }
 
-variable "runtime" {
-  description = "The identifier of the function's runtime."
-  type        = string
-  default     = "python3.10"
-}
-
 variable "publish" {
   description = "Whether to publish creation/change as new Lambda Function Version."
   type        = bool
