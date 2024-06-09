@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "event_handler" {
   function_name = "${var.function_name}_${var.environment}"
   role          = aws_iam_role.event_handler_execution_role.arn
-#  handler       = var.function_handler
+  handler       = var.function_handler
   package_type  = var.package_type
   image_uri     = "${var.ecr_repository_url}:latest"
 #  runtime       = var.runtime
