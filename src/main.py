@@ -3,14 +3,14 @@ import os
 from aws_lambda_powertools import Logger
 from aws_lambda_powertools.utilities.typing import LambdaContext
 
-
-logger = Logger()
+log_level = os.environ.get('LOG_LEVEL', 'DEBUG')
+logger = Logger(level=log_level)
 
 class AppConfig:
     """
     Application configuration class. This class is used to set global variables.
     """
-    logger.level        = os.environ.get('LOG_LEVEL') or 'INFO'
+    pass  # Removed the logger.level line
 
 @logger.inject_lambda_context
 def lambda_handler(event: dict, context: LambdaContext):

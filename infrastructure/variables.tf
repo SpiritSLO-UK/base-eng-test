@@ -60,7 +60,7 @@ variable "powertools_service_name" {
 variable "log_level" {
   description = "The log level for the function."
   type        = string
-  default     = "INFO"
+  default     = "DEBUG"
 }
 
 variable "filepath" {
