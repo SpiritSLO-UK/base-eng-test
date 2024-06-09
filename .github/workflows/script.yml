@@ -71,4 +71,4 @@ jobs:
           run: |
               aws lambda update-function-code \
               --function-name default_function_name_dev \
-              --image-uri ${{ env.full_image }}
+              --image-uri 880653920649.dkr.ecr.eu-west-1.amazonaws.com/ecr_powertool_dev:latest
