@@ -35,7 +35,7 @@ jobs:
 
       - name: Set IMAGE_TAG
         id: image-tag
-        run: echo "IMAGE_TAG=Lambda-App-v1-${GITHUB_SHA:0:8}" >> $GITHUB_ENV
+        run: echo "IMAGE_TAG=latest" >> $GITHUB_ENV
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-publish
