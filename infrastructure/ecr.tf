@@ -6,3 +6,26 @@ resource "aws_ecr_repository" "ecr" {
     scan_on_push = true
   }
 }
+
+resource "aws_ecr_lifecycle_policy" "ecr_lifecycle_policy" {
+  repository = aws_ecr_repository.ecr.name
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Ensures there are no more than 10 images avaliable",
+            "selection": {
+                "tagStatus": "untagged",
+                "countType": "imageCountMoreThan",
+                "countNumber": 10
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
