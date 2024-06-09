@@ -45,12 +45,6 @@ variable "function_name" {
   default = "default_function_name"
 }
 
-variable "function_handler" {
-  description = "The function entrypoint in your code."
-  type        = string
-  default     = "main.lambda_handler"
-}
-
 variable "powertools_service_name" {
   description = "The name of the service."
   type        = string
