@@ -1,11 +1,11 @@
-# Use an official Python runtime as a parent image
+# Use an official AWS Lambda Python runtime as a parent image
 FROM public.ecr.aws/lambda/python:3.10
 
-# Set the working directory in the container to /app
-WORKDIR /app
+# Set the working directory in the container to /var/task
+WORKDIR /var/task
 
-# Add the current directory contents into the container at /app
-ADD . /app
+# Add the current directory contents into the container at /var/task
+ADD . /var/task
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
