@@ -36,7 +36,7 @@ variable "timeout" {
 variable "function_name" {
   description = "The name of the Lambda Function."
   type        = string
-  default = "default_function_name"
+  default = "Hall_9000"
 }
 
 variable "powertools_service_name" {
@@ -48,13 +48,7 @@ variable "powertools_service_name" {
 variable "log_level" {
   description = "The log level for the function."
   type        = string
-  default     = "DEBUG"
-}
-
-variable "filepath" {
-  description = "The path to the function's deployment package within the local filesystem."
-  type        = string
-  default     = "deployment_package.zip" #Need to look into this aftrer AWS infra is sorted
+  default     = "INFO"
 }
 
 variable "ecr_image_tag_mutability" {
