@@ -1,3 +1,9 @@
+variable "account_id" {
+  description = "The AWS account ID."
+  type        = string
+  default     = "880653920649"
+}
+
 variable "region" {
   description = "The AWS region to deploy to."
   type        = string
@@ -60,5 +66,11 @@ variable "ecr_image_tag_mutability" {
 variable "ecr_repository_url" {
   description = "The URL of the ECR repository."
   type        = string
-  default = "880653920649.dkr.ecr.eu-west-1.amazonaws.com/ecr_powertool_dev"
+  default     = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/ecr_${var.powertools_service_name}_${var.environment}"
+}
+
+variable "image_count" {
+  description = "The number of untagged images to retain in the ECR repository"
+  type        = number
+  default     = 10
 }
