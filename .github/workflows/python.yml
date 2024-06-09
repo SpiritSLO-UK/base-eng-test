@@ -83,5 +83,5 @@ jobs:
         with:
           delete-only-untagged-versions: 'false'
           min-versions-to-keep: 10
-          package-name: 'ecr_powertool_dev'
+          package-name: 'ecr_powertool_dev:latest'
           package-type: 'container'
