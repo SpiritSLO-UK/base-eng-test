@@ -36,7 +36,7 @@ variable "timeout" {
 variable "function_name" {
   description = "The name of the Lambda Function."
   type        = string
-  default = "Hall_9000"
+  default = "Hal_9000"
 }
 
 variable "powertools_service_name" {

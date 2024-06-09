@@ -51,3 +51,5 @@ resource "aws_cloudwatch_log_group" "api_gateway" {
   name              = "/aws/api-gateway/event_handler-${var.environment}"
   retention_in_days = 60
 }
+
+#Test v1
