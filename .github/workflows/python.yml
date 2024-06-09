@@ -70,7 +70,7 @@ jobs:
         - name: Deploy to AWS Lambda
           run: |
               aws lambda update-function-code \
-              --function-name Hal_9000_dev \
+              --function-name ${{ vars.FUNCTION_NAME }} \
               --image-uri 880653920649.dkr.ecr.eu-west-1.amazonaws.com/ecr_powertool_dev:latest \
               --debug
 
