@@ -83,5 +83,5 @@ jobs:
         with:
           delete-only-untagged-versions: 'false'
           min-versions-to-keep: 10
-          package-name: 'your-docker-container-package-name'
+          package-name: 'ecr_powertool_dev'
           package-type: 'container'
