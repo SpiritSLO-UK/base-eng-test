@@ -63,12 +63,6 @@ variable "ecr_image_tag_mutability" {
   default     = "MUTABLE"  // or "IMMUTABLE"
 }
 
-variable "ecr_repository_url" {
-  description = "The URL of the ECR repository."
-  type        = string
-  default     = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/ecr_${var.powertools_service_name}_${var.environment}"
-}
-
 variable "image_count" {
   description = "The number of untagged images to retain in the ECR repository"
   type        = number
