@@ -1,3 +1,14 @@
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "org-YDt8YYpNvYtpLLwS"
+
+    workspaces {
+      name = "ws-DzqwhjWiStzYgC6d"
+    }
+  }
+}
+
 locals {
   ecr_repository_url = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/ecr_${var.powertools_service_name}_${var.environment}"
 }
