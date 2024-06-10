@@ -73,17 +73,16 @@ jobs:
         id: build-publish
         shell: bash
         env:
-          ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
-          ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
-          docker_build_dir: "src"
-          path_to_dockerfile: "src/Dockerfile"
-          IMAGE_TAG: ${{ env.IMAGE_TAG }}
+            ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+            ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
+            docker_build_dir: "src"
+            path_to_dockerfile: "src/Dockerfile"
+            IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
           docker build "${{ env.docker_build_dir }}" -f "${{ env.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:latest"
           echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
-          echo "image_tag=$IMAGE_TAG" >> $GITHUB_ENV
           echo "full_image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
   deploy_infra:
