@@ -93,7 +93,7 @@ jobs:
         id: build-publish
         shell: bash
         env:
-            ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+            ECR_REGISTRY: ${{ vars.ECR_REGISTRY }} # I hardcoded the ECR_REGISTRY and ECR_REPO_NAME in the Github repository 
             ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
             docker_build_dir: "src"
             path_to_dockerfile: "src/Dockerfile"

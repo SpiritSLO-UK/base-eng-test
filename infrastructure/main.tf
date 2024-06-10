@@ -20,12 +20,12 @@ resource "aws_lambda_function" "event_handler" {
   # checkov:skip=CKV_AWS_272: We are using docker image as a package type
   # checkov:skip=CKV_AWS_50: We do not need to enable X-Ray tracing for this Lambda function
   # checkov:skip=CKV_AWS_173: We do not need to enable encryption at rest for this Lambda function
-  function_name = "${var.function_name}_${var.environment}"
-  role          = aws_iam_role.event_handler_execution_role.arn
-  package_type  = var.package_type
-  image_uri     = "${local.ecr_repository_url}:${var.image_tag}"
-  publish       = var.publish
-  architectures = var.architectures
+  function_name                  = "${var.function_name}_${var.environment}"
+  role                           = aws_iam_role.event_handler_execution_role.arn
+  package_type                   = var.package_type
+  image_uri                      = "${local.ecr_repository_url}:${var.image_tag}"
+  publish                        = var.publish
+  architectures                  = var.architectures
   reserved_concurrent_executions = var.reserved_concurrent_executions
 
   timeout = var.timeout
