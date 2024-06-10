@@ -72,4 +72,5 @@ variable "image_count" {
 variable "IMAGE_TAG" {
   description = "The image tag to use for the ECR repository."
   type        = string
+  default     = "none"
 }
