@@ -52,6 +52,6 @@ resource "aws_cloudwatch_log_group" "api_gateway" {
   retention_in_days = 60
 }
 
-# checkov:skip=KV_AWS_309: We require this to be open to the public
+
 # checkov:skip=KV_AWS_338: No need to keep logs for this test for long duration
 # checkov:skip=CKV_AWS_158: As this is not a production environment, we can skip this check
