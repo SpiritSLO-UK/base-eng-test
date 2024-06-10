@@ -12,6 +12,7 @@ resource "aws_apigatewayv2_integration" "event_handler" {
 }
 
 resource "aws_apigatewayv2_route" "event_handler" {
+  # checkov:skip=KV_AWS_309: We require this to be open to the public
   api_id    = aws_apigatewayv2_api.event_handler.id
   route_key = "POST /event-handler"
   target    = "integrations/${aws_apigatewayv2_integration.event_handler.id}"
@@ -51,7 +52,6 @@ resource "aws_cloudwatch_log_group" "api_gateway" {
   name              = "/aws/api-gateway/event_handler-${var.environment}"
   retention_in_days = 60
 }
-
 
 # checkov:skip=KV_AWS_338: No need to keep logs for this test for long duration
 # checkov:skip=CKV_AWS_158: As this is not a production environment, we can skip this check
