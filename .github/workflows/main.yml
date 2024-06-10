@@ -32,8 +32,6 @@ jobs:
       TF_VAR_image_tag: none
 
     runs-on: ubuntu-latest
-    outputs:
-      ecr_repository_url: ${{ steps.tf_outputs.outputs.ecr_repository_url }}
 
     steps:
       - name: Checkout
@@ -59,13 +57,7 @@ jobs:
           TF_VAR_image_tag: ${{ env.TF_VAR_image_tag }}
         run: terraform apply -auto-approve -target=aws_ecr_repository.ecr   
         working-directory: ${{ env.WORKING_DIRECTORY }}
-    
-      - name: Get Terraform Output
-        id: tf_outputs
-        run: |
-            ecr_repository_url=$(terraform output -raw ecr_repository_url)
-            echo "ECR_REGISTRY=$ecr_repository_url" >> $GITHUB_OUTPUT
-        working-directory: ${{ env.WORKING_DIRECTORY }}
+        
 
   build-and-push:
     needs: deploy_ECR
@@ -101,16 +93,16 @@ jobs:
         id: build-publish
         shell: bash
         env:
-            ECR_REGISTRY: ${{ needs.deploy_ECR.outputs.ecr_repository_url }}
-
+            ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+            ECR_REPOSITORY: ${{ vars.ECR_REPO_NAME }}
             docker_build_dir: "src"
             path_to_dockerfile: "src/Dockerfile"
             IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
-          docker build "${{ env.docker_build_dir }}" -f "${{ env.path_to_dockerfile }}" -t "$ECR_REGISTRY:$IMAGE_TAG"
-          docker push "$ECR_REGISTRY/:$IMAGE_TAG"
-          echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/"
-          echo "full_image=$ECR_REGISTRY/$IMAGE_TAG" >> $GITHUB_ENV
+          docker build "${{ env.docker_build_dir }}" -f "${{ env.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
+          echo "full_image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
   deploy_infra:
     needs: build-and-push
