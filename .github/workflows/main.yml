@@ -13,6 +13,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       aws-region: eu-west-1
       WORKING_DIRECTORY: ./infrastructure
+      TF_VAR_image_tag: none
 
     runs-on: ubuntu-latest
 
@@ -36,8 +37,11 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Terraform Apply
+        env:
+          TF_VAR_image_tag: ${{ env.TF_VAR_image_tag }}
         run: terraform apply -auto-approve -target=aws_ecr_repository.ecr   
         working-directory: ${{ env.WORKING_DIRECTORY }}
+        
 
   build-and-push:
     needs: deploy_ECR
@@ -101,7 +105,7 @@ jobs:
         id: image-tag
         run: echo "IMAGE_TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
         env:
-            TF_VAR_IMAGE_TAG: ${{ env.IMAGE_TAG }}
+            TF_VAR_image_tag: ${{ env.IMAGE_TAG }}
 
       - name: Checkout
         uses: actions/checkout@v3
