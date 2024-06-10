@@ -60,7 +60,7 @@ variable "log_level" {
 variable "ecr_image_tag_mutability" {
   description = "Determines whether image tags can be overwritten"
   type        = string
-  default     = "MUTABLE" // or "IMMUTABLE"
+  default     = "IMMUTABLE" // or "MUTABLE"
 }
 
 variable "image_count" {
