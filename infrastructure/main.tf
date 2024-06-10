@@ -1,3 +1,4 @@
+# I setup state file to be pushed to Terraform Cloud
 terraform {
   backend "remote" {
     hostname     = "app.terraform.io"
@@ -35,5 +36,3 @@ resource "aws_cloudwatch_log_group" "event_handler" {
   name              = "/aws/lambda/${var.function_name}_${var.environment}"
   retention_in_days = 60
 }
-
-#Test v2.0

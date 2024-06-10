@@ -42,7 +42,7 @@ variable "timeout" {
 variable "function_name" {
   description = "The name of the Lambda Function."
   type        = string
-  default = "Hal_9000"
+  default     = "Hal_9000"
 }
 
 variable "powertools_service_name" {
@@ -60,7 +60,7 @@ variable "log_level" {
 variable "ecr_image_tag_mutability" {
   description = "Determines whether image tags can be overwritten"
   type        = string
-  default     = "MUTABLE"  // or "IMMUTABLE"
+  default     = "MUTABLE" // or "IMMUTABLE"
 }
 
 variable "image_count" {
