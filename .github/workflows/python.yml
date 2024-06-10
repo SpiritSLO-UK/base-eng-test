@@ -47,7 +47,7 @@ jobs:
           path_to_dockerfile: "src/Dockerfile"
           IMAGE_TAG: ${{ env.IMAGE_TAG }}
         run: |
-          docker build "${{ env.docker_build_dir }}" -f "${{ env.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build "${{ env.docker_build_dir }}" -f "${{ env.path_to_dockerfile }}" -t "$ECR_REGISTRY/$ECR_REPOSITORY:latest" -t "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:latest"
           echo "IMAGE $IMAGE_TAG is pushed to $ECR_REGISTRY/$ECR_REPOSITORY"
