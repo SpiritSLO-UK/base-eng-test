@@ -48,8 +48,3 @@ resource "aws_ecr_lifecycle_policy" "ecr_lifecycle_policy" {
 }
 EOF
 }
-
-output "ecr_repository_name" {
-  description = "The name of the ECR repository"
-  value       = aws_ecr_repository.ecr.name
-}
