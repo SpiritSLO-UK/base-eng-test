@@ -127,6 +127,6 @@ jobs:
 
       - name: Terraform Apply
         env:
-            TF_VAR_image_tag: ${{ env.TF_VAR_image_tag }}
+            TF_VAR_image_tag: ${{ env.IMAGE_TAG }}
         run: terraform apply -auto-approve 
         working-directory: ${{ env.WORKING_DIRECTORY }}
