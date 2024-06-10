@@ -12,7 +12,7 @@ resource "aws_apigatewayv2_integration" "event_handler" {
 }
 
 resource "aws_apigatewayv2_route" "event_handler" {
-  # checkov:skip=KV_AWS_309: We require this to be open to the public
+  #checkov:skip=KV_AWS_309:We require this to be open to the public
   api_id    = aws_apigatewayv2_api.event_handler.id
   route_key = "POST /event-handler"
   target    = "integrations/${aws_apigatewayv2_integration.event_handler.id}"
