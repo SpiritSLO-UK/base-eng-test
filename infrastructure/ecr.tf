@@ -9,6 +9,7 @@
  */
 
 resource "aws_ecr_repository" "ecr" {
+  # checkov:skip=CKV_AWS_136: We use private ECR repositories and we don't need to enforce encryption as it's only a test case
   name                 = "ecr_${var.powertools_service_name}_${var.environment}"
   image_tag_mutability = var.ecr_image_tag_mutability
 

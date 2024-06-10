@@ -73,3 +73,9 @@ variable "image_tag" {
   description = "The image tag to use for the ECR repository."
   type        = string
 }
+
+variable "reserved_concurrent_executions" {
+  description = "The amount of reserved concurrent executions for the Lambda function"
+  type        = number
+  default     = 2
+}
