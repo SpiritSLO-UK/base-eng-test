@@ -6,7 +6,7 @@ resource "aws_lambda_function" "event_handler" {
   function_name = "${var.function_name}_${var.environment}"
   role          = aws_iam_role.event_handler_execution_role.arn
   package_type  = var.package_type
-  image_uri     = "${local.ecr_repository_url}:latest"
+  image_uri     = "${local.ecr_repository_url}:${var.IMAGE_TAG}"
   publish       = var.publish
   architectures = var.architectures
 
